@@ -24,12 +24,13 @@ public class HorizonConfig {
 	private boolean showLODBoundaries = false;
 
 	public void load() {
-		// TODO: Load from config file
+		// Configuration is now loaded via HorizonConfigManager
 		LOGGER.info("Configuration loaded with render distance: {} chunks", renderDistance);
 	}
 
 	public void save() {
-		// TODO: Save to config file
+		// Configuration is now saved via HorizonConfigManager
+		HorizonConfigManager.saveConfig(this);
 	}
 
 	// Getters
@@ -96,5 +97,13 @@ public class HorizonConfig {
 	public void setAdaptiveQuality(boolean enabled) {
 		this.adaptiveQuality = enabled;
 		save();
+	}
+
+	public void setDebugMode(boolean enabled) {
+		this.debugMode = enabled;
+	}
+
+	public void setShowLODBoundaries(boolean show) {
+		this.showLODBoundaries = show;
 	}
 }

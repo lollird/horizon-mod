@@ -5,6 +5,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
 import com.horizonmod.rendering.LODRenderSystem;
 import com.horizonmod.config.HorizonConfig;
+import com.horizonmod.config.HorizonConfigManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ public class HorizonModClient implements ClientModInitializer {
 		
 		// Initialize configuration
 		config = new HorizonConfig();
-		config.load();
+		HorizonConfigManager.loadConfig(config);
 		
 		// Initialize LOD rendering system
 		lodRenderSystem = new LODRenderSystem(config);
