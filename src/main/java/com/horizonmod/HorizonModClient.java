@@ -10,6 +10,7 @@ import com.horizonmod.screen.ScreenEventHandler;
 import com.horizonmod.util.PerformanceMonitor;
 import com.horizonmod.util.DebugOverlay;
 import com.horizonmod.util.MetricsCollector;
+import com.horizonmod.util.ResourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ public class HorizonModClient implements ClientModInitializer {
 	private static PerformanceMonitor performanceMonitor;
 	private static DebugOverlay debugOverlay;
 	private static MetricsCollector metricsCollector;
+	private static ResourceManager resourceManager;
 
 	@Override
 	public void onInitializeClient() {
@@ -29,6 +31,9 @@ public class HorizonModClient implements ClientModInitializer {
 		// Initialize configuration
 		config = new HorizonConfig();
 		HorizonConfigManager.loadConfig(config);
+		
+		// Initialize resource management
+		resourceManager = new ResourceManager();
 		
 		// Initialize performance monitoring
 		performanceMonitor = new PerformanceMonitor();
@@ -63,5 +68,9 @@ public class HorizonModClient implements ClientModInitializer {
 
 	public static MetricsCollector getMetricsCollector() {
 		return metricsCollector;
+	}
+
+	public static ResourceManager getResourceManager() {
+		return resourceManager;
 	}
 }
