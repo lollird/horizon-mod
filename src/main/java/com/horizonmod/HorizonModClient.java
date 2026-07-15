@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import com.horizonmod.rendering.LODRenderSystem;
 import com.horizonmod.config.HorizonConfig;
 import com.horizonmod.config.HorizonConfigManager;
+import com.horizonmod.screen.ScreenEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,6 +27,10 @@ public class HorizonModClient implements ClientModInitializer {
 		// Initialize LOD rendering system
 		lodRenderSystem = new LODRenderSystem(config);
 		LOGGER.info("LOD Render System initialized with render distance: {} chunks", config.getRenderDistance());
+		
+		// Register key bindings and screen events
+		ScreenEventHandler.registerKeyInputs();
+		LOGGER.info("Key bindings registered (Press 'H' to open config)");
 	}
 
 	public static LODRenderSystem getLODRenderSystem() {

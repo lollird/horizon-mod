@@ -1,0 +1,5 @@
+src/main/resources/assets/horizonmod/lang/en_us.json:
+{
+  "key.horizonmod.open_config": "Open Horizon Mod Settings",
+  "category.horizonmod.config": "Horizon Mod"
+}
