@@ -5,6 +5,7 @@ import com.horizonmod.rendering.lod.LODManager;
 import com.horizonmod.rendering.opengl.OpenGLOptimizer;
 import com.horizonmod.rendering.culling.FrustumCuller;
 import com.horizonmod.rendering.chunk.ChunkSimplificationManager;
+import com.horizonmod.rendering.shader.ShaderRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,6 +17,7 @@ public class LODRenderSystem {
 	private final OpenGLOptimizer openGLOptimizer;
 	private final FrustumCuller frustumCuller;
 	private final ChunkSimplificationManager chunkSimplificationManager;
+	private final ShaderRegistry shaderRegistry;
 	
 	private long lastFrameTime = System.currentTimeMillis();
 	private int frameCount = 0;
@@ -27,6 +29,8 @@ public class LODRenderSystem {
 		this.openGLOptimizer = new OpenGLOptimizer(config);
 		this.frustumCuller = new FrustumCuller();
 		this.chunkSimplificationManager = new ChunkSimplificationManager(config);
+		this.shaderRegistry = new ShaderRegistry();
+		this.shaderRegistry.loadDefaults();
 		
 		LOGGER.info("LOD Render System initialized");
 		LOGGER.info("- Render Distance: {} chunks", config.getRenderDistance());
@@ -140,6 +144,10 @@ public class LODRenderSystem {
 
 	public ChunkSimplificationManager getChunkSimplificationManager() {
 		return chunkSimplificationManager;
+	}
+
+	public ShaderRegistry getShaderRegistry() {
+		return shaderRegistry;
 	}
 
 	public HorizonConfig getConfig() {
