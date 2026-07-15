@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+*.jar
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Java
+*.class
+*.log
+
+# Minecraft
+run/
+.minecraft/
+
+# Environment
+.env
