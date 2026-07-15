@@ -4,6 +4,7 @@ import com.horizonmod.config.HorizonConfig;
 import com.horizonmod.rendering.lod.LODManager;
 import com.horizonmod.rendering.opengl.OpenGLOptimizer;
 import com.horizonmod.rendering.culling.FrustumCuller;
+import com.horizonmod.rendering.chunk.ChunkSimplificationManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,6 +15,7 @@ public class LODRenderSystem {
 	private final LODManager lodManager;
 	private final OpenGLOptimizer openGLOptimizer;
 	private final FrustumCuller frustumCuller;
+	private final ChunkSimplificationManager chunkSimplificationManager;
 	
 	private long lastFrameTime = System.currentTimeMillis();
 	private int frameCount = 0;
@@ -24,6 +26,7 @@ public class LODRenderSystem {
 		this.lodManager = new LODManager(config);
 		this.openGLOptimizer = new OpenGLOptimizer(config);
 		this.frustumCuller = new FrustumCuller();
+		this.chunkSimplificationManager = new ChunkSimplificationManager(config);
 		
 		LOGGER.info("LOD Render System initialized");
 		LOGGER.info("- Render Distance: {} chunks", config.getRenderDistance());
@@ -44,6 +47,12 @@ public class LODRenderSystem {
 		// Update frustum culling if enabled
 		if (config.isFrustumCullingEnabled()) {
 			frustumCuller.updateFrustum();
+		}
+		
+		// Process chunk simplification (expensive, do infrequently)
+		if (frameCount % 10 == 0) {
+			// TODO: Get camera position from world
+			// chunkSimplificationManager.processCulledChunks(cameraX, cameraZ);
 		}
 		
 		// Adaptive quality adjustment
@@ -127,6 +136,10 @@ public class LODRenderSystem {
 
 	public FrustumCuller getFrustumCuller() {
 		return frustumCuller;
+	}
+
+	public ChunkSimplificationManager getChunkSimplificationManager() {
+		return chunkSimplificationManager;
 	}
 
 	public HorizonConfig getConfig() {
