@@ -7,6 +7,9 @@ import com.horizonmod.rendering.LODRenderSystem;
 import com.horizonmod.config.HorizonConfig;
 import com.horizonmod.config.HorizonConfigManager;
 import com.horizonmod.screen.ScreenEventHandler;
+import com.horizonmod.util.PerformanceMonitor;
+import com.horizonmod.util.DebugOverlay;
+import com.horizonmod.util.MetricsCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +18,9 @@ public class HorizonModClient implements ClientModInitializer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HorizonMod.MOD_ID);
 	private static LODRenderSystem lodRenderSystem;
 	private static HorizonConfig config;
+	private static PerformanceMonitor performanceMonitor;
+	private static DebugOverlay debugOverlay;
+	private static MetricsCollector metricsCollector;
 
 	@Override
 	public void onInitializeClient() {
@@ -24,13 +30,19 @@ public class HorizonModClient implements ClientModInitializer {
 		config = new HorizonConfig();
 		HorizonConfigManager.loadConfig(config);
 		
+		// Initialize performance monitoring
+		performanceMonitor = new PerformanceMonitor();
+		metricsCollector = new MetricsCollector(performanceMonitor);
+		debugOverlay = new DebugOverlay(performanceMonitor);
+		
 		// Initialize LOD rendering system
 		lodRenderSystem = new LODRenderSystem(config);
 		LOGGER.info("LOD Render System initialized with render distance: {} chunks", config.getRenderDistance());
 		
 		// Register key bindings and screen events
 		ScreenEventHandler.registerKeyInputs();
-		LOGGER.info("Key bindings registered (Press 'H' to open config)");
+		ScreenEventHandler.setDebugOverlay(debugOverlay);
+		LOGGER.info("Key bindings registered (Press 'H' for config, 'G' for debug overlay)");
 	}
 
 	public static LODRenderSystem getLODRenderSystem() {
@@ -39,5 +51,17 @@ public class HorizonModClient implements ClientModInitializer {
 
 	public static HorizonConfig getConfig() {
 		return config;
+	}
+
+	public static PerformanceMonitor getPerformanceMonitor() {
+		return performanceMonitor;
+	}
+
+	public static DebugOverlay getDebugOverlay() {
+		return debugOverlay;
+	}
+
+	public static MetricsCollector getMetricsCollector() {
+		return metricsCollector;
 	}
 }

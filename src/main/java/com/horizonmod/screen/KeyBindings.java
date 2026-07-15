@@ -1,6 +1,5 @@
 package com.horizonmod.screen;
 
-import com.horizonmod.HorizonModClient;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
@@ -9,7 +8,7 @@ import net.minecraft.client.util.InputUtil;
 import org.lwjgl.glfw.GLFW;
 
 /**
- * Keyboard binding for opening Horizon Mod configuration screen
+ * Keyboard bindings for Horizon Mod
  */
 @Environment(EnvType.CLIENT)
 public class KeyBindings {
@@ -18,6 +17,15 @@ public class KeyBindings {
 			"key.horizonmod.open_config",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_H,
+			"category.horizonmod.config"
+		)
+	);
+
+	public static final KeyBinding TOGGLE_DEBUG_OVERLAY = KeyBindingHelper.registerKeyBinding(
+		new KeyBinding(
+			"key.horizonmod.toggle_debug",
+			InputUtil.Type.KEYSYM,
+			GLFW.GLFW_KEY_G,
 			"category.horizonmod.config"
 		)
 	);
